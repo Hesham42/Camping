@@ -35,7 +35,10 @@ export default class Campings extends React.Component {
       </View>
     );
   }
-
+  state = 
+  {
+     active: 'all'
+  }
   static navigationOptions = {
     header: null,
   };
@@ -43,17 +46,23 @@ export default class Campings extends React.Component {
   return (
     <View style={styles.header}>
     <View style={{ flex: 2, flexDirection: 'row', }}>
+    <View style={styles.settings}>
     <View style={styles.location}>
-    <FontAwesome name="location-arrow" size={24} color="white" />
+    <FontAwesome name="location-arrow" size={14} color="white" />
+    </View>
     </View>
     <View style={styles.options}>
-    <Text>Detected Location</Text>
-    <Text>Northern Islands</Text>
+    <Text style={{ fontSize: 12, color: 'grey', marginBottom: 5, }}>
+      Detected Location
+    </Text>
+    <Text style={{ fontSize: 14, fontWeight: '300', }}>
+    Northern Islands () 
+    </Text>
     </View>  
     </View>
     
-    <View style={{ alignItems: 'flex-end' }}>
-    <Ionicons name="ios-settings" size={30} color="black" />
+    <View style={styles.settings}>
+    <Ionicons name="ios-settings" size={20} color="black" />
     </View>
     </View>
    );
@@ -74,16 +83,53 @@ export default class Campings extends React.Component {
     );
   }
   renderTabs() {
+    const { active } = this.state;
     return (
       <View style={styles.tabs}>
-      <View style={styles.tab}>
-        <Text>All Sport</Text>
+      <View 
+      style={[
+        styles.tab, 
+        active === 'all' ? styles.activeTab : null
+        ]}
+      >
+        <Text 
+        style={[
+          styles.tabTitle,
+          active === 'all' ? styles.activeTabTitile : null
+          ]}
+        >
+        All Sport
+        </Text>
         </View>
-        <View style={styles.tab}>
-        <Text>Tenting</Text>
+        <View 
+      style={[
+          styles.tab,
+          active === 'tent' ? styles.activeTab : null
+          ]}
+        >
+        <Text 
+        style={[
+          styles.tabTitle,
+          active === 'tent' ? styles.activeTabTitile : null
+          ]}
+        >
+          Tenting
+        </Text>
         </View>
-        <View style={styles.tab}>
-        <Text>Rv Camping</Text>
+        <View 
+        style={[
+          styles.tab,
+          active === 'rv' ? styles.activeTab : null
+          ]}
+        >
+        <Text 
+        style={[
+          styles.tabTitle, 
+          active === 'rv' ? styles.activeTabTitile : null
+          ]}
+        >
+          Rv Camping
+        </Text>
         </View>
         </View>
     );
@@ -114,9 +160,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
   },
   location: {
-    height: 32,
-    width: 20,
-    borderRadius: 16,
+    height: 24,
+    width: 24,
+    borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'orange',
@@ -141,5 +187,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
 
   },
+  tabTitle: {
+    fontWeight: 'bold',
 
+  },
+  settings: {
+     alignItems: 'flex-end', 
+    justifyContent: 'center',
+  },
+  activeTab: { 
+    borderBottomColor: 'orange',
+    borderBottomWidth: 3, 
+  },
+  activeTabTitile: { 
+    color: 'orange',
+  },
 });
