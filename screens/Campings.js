@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
   Dimensions,
+  SafeAreaView,
 
 } from 'react-native';
 import { MapView } from 'expo';
@@ -20,19 +21,16 @@ import { MonoText } from '../components/StyledText';
 const { width, height } = Dimensions.get('screen');
 
 export default class Campings extends React.Component {
-  render() {
+  render () {
     return (
-      <View style={styles.container}>
-        <ScrollView
-          style={styles.container}
-          contentContainerStyle={styles.contentContainer}
-        >
-        {this.renderHeader()}
-        {this.renderTabs()} 
+      <SafeAreaView style={styles.container}>
+       {this.renderHeader()}
+        <ScrollView style={styles.container}>
         {this.renderMap()}
         {this.renderList()}
         </ScrollView> 
-      </View>
+      </SafeAreaView>
+     
     );
   }
   state = 
@@ -44,6 +42,7 @@ export default class Campings extends React.Component {
   };
   renderHeader() {
   return (
+    <View style={styles.headerContainer}>
     <View style={styles.header}>
     <View style={{ flex: 2, flexDirection: 'row', }}>
     <View style={styles.settings}>
@@ -64,6 +63,8 @@ export default class Campings extends React.Component {
     <View style={styles.settings}>
     <Ionicons name="ios-settings" size={20} color="black" />
     </View>
+    </View>
+    {this.renderTabs()} 
     </View>
    );
   }
@@ -97,6 +98,7 @@ export default class Campings extends React.Component {
           styles.tabTitle,
           active === 'all' ? styles.activeTabTitile : null
           ]}
+          onPress={() => this.setState({ active: 'all' })}
         >
         All Sport
         </Text>
@@ -112,6 +114,7 @@ export default class Campings extends React.Component {
           styles.tabTitle,
           active === 'tent' ? styles.activeTabTitile : null
           ]}
+          onPress={() => this.setState({ active: 'tent' })}
         >
           Tenting
         </Text>
@@ -127,6 +130,7 @@ export default class Campings extends React.Component {
           styles.tabTitle, 
           active === 'rv' ? styles.activeTabTitile : null
           ]}
+          onPress={() => this.setState({ active: 'rv' })}
         >
           Rv Camping
         </Text>
@@ -150,6 +154,11 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
+  },
+  headerContainer: {
+      top: 20,
+      height: height * 0.15,
+      width: width,
   },
   header: {
     flex: 1,
@@ -183,12 +192,14 @@ const styles = StyleSheet.create({
     },
 
   tab: {
-    justifyContent: 'center',
-    paddingHorizontal: 14,
-
+    paddingHorizontal: 20,
+    marginHorizontal: 10,
   },
   tabTitle: {
     fontWeight: 'bold',
+    fontSize: 14,
+    marginBottom: 16,
+
 
   },
   settings: {
